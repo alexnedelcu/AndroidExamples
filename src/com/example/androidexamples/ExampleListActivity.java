@@ -7,9 +7,6 @@ import java.util.Map;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
@@ -26,21 +23,17 @@ public class ExampleListActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.example_list);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.example_list, menu);
 		
 		// Adding group names
 		final String[] groupNames = new String [] {
 				"GUI", 
-				"Camera"
+				"Camera",
+				"Data exchange"
 				}; 
 		String[] groupDescriptions = new String [] {
 				"View class - text, buttons, lists",
-				"Taking pictures and videos"
+				"Taking pictures and videos",
+				"Sending, receiving and streaming data"
 				};
 		final Map<String, ArrayList<String[]>> childData = new HashMap<String, ArrayList<String[]>> ();
 		
@@ -57,13 +50,21 @@ public class ExampleListActivity extends Activity {
 				"com.example.androidexamples.ExampleListActivity"
 			});
 		
-		
+
 		// Adding children under Camera
 		childData.put("Camera", new ArrayList<String[]>());
 		childData.get("Camera").add(new String[] {
 				"Pictures",
 				"Taking and storing pictures",
-				"com.example.androidexamples.CameraPicsActivity"
+				"com.example.androidexamples.HardwareCameraActivity"
+			});
+		
+		// Adding children under Data exchange
+		childData.put("Data exchange", new ArrayList<String[]>());
+		childData.get("Data exchange").add(new String[] {
+				"Send file",
+				"Send MPEG4 file through HTTP PUT",
+				"com.example.androidexamples.DataExchangeSendHTTPPUT"
 			});
 		
 		// parsing data from the input above to the one needed for adapter
@@ -75,7 +76,6 @@ public class ExampleListActivity extends Activity {
 			ArrayList< Map<String, String> > childList  = new ArrayList< Map<String, String> >();
 			for (int j=0; j<childData.get(groupNames[i]).size(); j++) {
 				Map<String, String> child = new HashMap <String, String>();
-				System.out.println("PRINT: "+childData.get(groupNames[i]).get(j)[0]);
 				child.put("TITLE", childData.get(groupNames[i]).get(j)[0]);
 				child.put("DESC", childData.get(groupNames[i]).get(j)[1]);
 
@@ -86,10 +86,11 @@ public class ExampleListActivity extends Activity {
 			children.add(childList);
 		}
 		
+
 		ExpandableListAdapter listAdapter = new SimpleExpandableListAdapter(
 				this,
 				groups,
-				android.R.layout.simple_expandable_list_item_2, // shows title only
+				android.R.layout.simple_expandable_list_item_1, // shows title only
 				new String[] {"TITLE", "DESC"},
                 new int[] { android.R.id.text1, android.R.id.text2 },
                 children, 
@@ -119,15 +120,7 @@ public class ExampleListActivity extends Activity {
 				} catch (ClassNotFoundException e2) {
 
 					// showing error dialog if the class does not exist
-					AlertDialog.Builder builder = new AlertDialog.Builder(ExampleListActivity.this);
-					builder.setMessage(R.string.dialog_message)
-						.setTitle(R.string.dialog_title)
-						.setPositiveButton("OK", new OnClickListener () {
-							@Override
-							public void onClick(DialogInterface arg0, int arg1) {
-								// the dialog disappears - nothing to do
-							}});
-					builder.show();
+					Util.showAlert(ExampleListActivity.this, R.string.dialog_message, R.string.dialog_title);
 					e2.printStackTrace();
 				}
 
@@ -135,6 +128,14 @@ public class ExampleListActivity extends Activity {
 			}
 			
 		});
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.example_list, menu);
+		
+
 		return true;
 	}
 

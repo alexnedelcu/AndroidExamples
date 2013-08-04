@@ -11,5 +11,14 @@
     <string name="title_activity_example_list">AndroidExamples</string>
     <string name="dialog_message">The requested activity is missing</string>
     <string name="dialog_title">Info</string>
+    <string name="title_activity_hardware_camera">HardwareCameraActivity</string>
+    <string name="dialog_missing_camera">The camera could not be started</string>
+    <string name="capture_picture">Picture</string>
+    <string name="capture_video">Video</string>
+    <string name="title_activity_data_exchange_httpput">DataExchangeHTTPPUT</string>
+    <string name="btn_data_exchange_httpput_send">Send POST</string>
+    <string name="title_activity_data_exchange_send_httpput">DataExchangeSendHTTPPUT</string>
+    <string name="textview_data_exchange_httpput">By pressing the following button, the pictures in the phone will start to be uploaded through HTTP PUT.</string>
+    <string name="txt_data_exchange_http_result_title">HTTP Reply:</string>
 
 </resources>
